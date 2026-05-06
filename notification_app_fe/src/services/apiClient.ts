@@ -1,5 +1,5 @@
 import { appLogger } from "./logger";
-import { getAuthToken } from "./auth";
+import { resolveAuthToken } from "./auth";
 
 export interface ApiRequestOptions {
   method?: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
@@ -36,7 +36,7 @@ export const apiRequest = async <T>(
 ): Promise<T> => {
   const url = buildUrl(baseUrl, path, options.query);
   const method = options.method ?? "GET";
-  const token = getAuthToken();
+  const token = await resolveAuthToken();
   const start = performance.now();
   const logger = appLogger.withContext({ scope: "api" });
 
