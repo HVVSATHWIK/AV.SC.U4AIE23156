@@ -35,7 +35,13 @@ export const fetchNotifications = async (
   query: NotificationQuery = {}
 ): Promise<Notification[]> => {
   const logger = appLogger.withContext({ scope: "notifications" });
-  const payload = await apiRequest<NotificationApiResponse>(API_URL, { query });
+  const queryParams: Record<string, string | number | boolean | undefined> = {
+    type: query.type,
+    status: query.status,
+    limit: query.limit,
+    cursor: query.cursor
+  };
+  const payload = await apiRequest<NotificationApiResponse>(API_URL, { query: queryParams });
   const notifications = payload.notifications.map(mapNotification);
 
   await logger.info("notifications mapped", { count: notifications.length });

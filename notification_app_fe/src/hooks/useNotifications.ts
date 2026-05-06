@@ -62,7 +62,7 @@ export const useNotifications = () => {
   const updateFilters = useCallback((nextFilters: NotificationFilters) => {
     setFilters(nextFilters);
     setPage(1);
-    void appLogger.info("filters updated", nextFilters);
+    void appLogger.info("filters updated", { filters: nextFilters });
   }, []);
 
   const markAsRead = useCallback((id: string) => {

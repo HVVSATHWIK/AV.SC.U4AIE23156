@@ -37,7 +37,7 @@ const FilterBar = ({ filters, onFiltersChange, onRefresh }: FilterBarProps) => {
     <Stack
       direction={{ xs: "column", md: "row" }}
       spacing={2}
-      alignItems={{ xs: "stretch", md: "center" }}
+      sx={{ alignItems: { xs: "stretch", md: "center" } }}
     >
       <FormControl size="small" sx={{ minWidth: 160 }}>
         <InputLabel>Status</InputLabel>

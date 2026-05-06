@@ -1,7 +1,7 @@
 import { APP_CONFIG } from "../utils/appConfig";
 
 export const getAuthToken = (): string | undefined => {
-  return localStorage.getItem(APP_CONFIG.authTokenKey) ?? undefined;
+  return localStorage.getItem(APP_CONFIG.authTokenKey) ?? APP_CONFIG.apiToken ?? undefined;
 };
 
 export const setAuthToken = (token: string): void => {

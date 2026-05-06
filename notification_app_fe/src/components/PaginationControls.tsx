@@ -12,7 +12,7 @@ const PaginationControls = ({ page, count, onChange }: PaginationControlsProps) 
   }
 
   return (
-    <Stack alignItems="center" sx={{ pt: 2 }}>
+    <Stack sx={{ pt: 2, alignItems: "center" }}>
       <Pagination
         page={page}
         count={count}

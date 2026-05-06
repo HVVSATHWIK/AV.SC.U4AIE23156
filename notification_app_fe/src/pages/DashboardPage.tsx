@@ -1,12 +1,4 @@
-import {
-  Alert,
-  Box,
-  Grid,
-  LinearProgress,
-  Paper,
-  Stack,
-  Typography
-} from "@mui/material";
+import { Alert, Box, LinearProgress, Paper, Stack, Typography } from "@mui/material";
 import DashboardLayout from "../components/DashboardLayout";
 import SummaryCards from "../components/SummaryCards";
 import FilterBar from "../components/FilterBar";
@@ -42,15 +34,22 @@ const DashboardPage = () => {
     <DashboardLayout>
       <SummaryCards summary={summary} loading={loading} />
 
-      <Grid container spacing={3}>
-        <Grid item xs={12} lg={8}>
-          <Paper sx={{ p: { xs: 2, md: 3 } }}>
-            <Stack spacing={2}>
+      <Box
+        sx={{
+          display: "grid",
+          gap: 3,
+          gridTemplateColumns: { xs: "1fr", lg: "2.1fr 1fr" }
+        }}
+      >
+        <Paper sx={{ p: { xs: 2, md: 3 } }}>
+          <Stack spacing={2}>
               <Stack
                 direction={{ xs: "column", md: "row" }}
                 spacing={1}
-                justifyContent="space-between"
-                alignItems={{ xs: "flex-start", md: "center" }}
+                sx={{
+                  justifyContent: "space-between",
+                  alignItems: { xs: "flex-start", md: "center" }
+                }}
               >
                 <Box>
                   <Typography variant="h5">All notifications</Typography>
@@ -74,14 +73,11 @@ const DashboardPage = () => {
               <NotificationList notifications={pagedNotifications} onMarkRead={markAsRead} />
 
               <PaginationControls page={page} count={pageCount} onChange={setPage} />
-            </Stack>
-          </Paper>
-        </Grid>
+          </Stack>
+        </Paper>
 
-        <Grid item xs={12} lg={4}>
-          <PriorityList items={priorityItems} loading={loading} />
-        </Grid>
-      </Grid>
+        <PriorityList items={priorityItems} loading={loading} />
+      </Box>
     </DashboardLayout>
   );
 };

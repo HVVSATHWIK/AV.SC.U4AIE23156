@@ -11,7 +11,10 @@ const PriorityList = ({ items, loading }: PriorityListProps) => {
   return (
     <Paper sx={{ p: 3, height: "100%" }}>
       <Stack spacing={2}>
-        <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Stack
+          direction="row"
+          sx={{ justifyContent: "space-between", alignItems: "center" }}
+        >
           <Typography variant="h5">Priority Inbox</Typography>
           <Chip label={`Top ${items.length}`} color="secondary" variant="outlined" />
         </Stack>
@@ -40,7 +43,7 @@ const PriorityList = ({ items, loading }: PriorityListProps) => {
                 borderColor: "grey.200"
               }}
             >
-              <Stack direction="row" spacing={1} alignItems="center">
+              <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
                 <Typography variant="overline" color="text.secondary">
                   #{index + 1}
                 </Typography>

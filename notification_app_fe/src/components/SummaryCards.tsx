@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Stack, Typography } from "@mui/material";
+import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
 import { NotificationSummary } from "../types/notification";
 
 interface SummaryCardsProps {
@@ -31,24 +31,34 @@ const SummaryCards = ({ summary, loading }: SummaryCardsProps) => {
   ];
 
   return (
-    <Grid container spacing={2} sx={{ mb: 3 }}>
+    <Box
+      sx={{
+        display: "grid",
+        gap: 2,
+        mb: 3,
+        gridTemplateColumns: {
+          xs: "1fr",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+          lg: "repeat(5, 1fr)"
+        }
+      }}
+    >
       {items.map((item) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={item.label}>
-          <Card sx={{ height: "100%" }}>
-            <CardContent>
-              <Stack spacing={1}>
-                <Typography variant="overline" color="text.secondary">
-                  {item.label}
-                </Typography>
-                <Typography variant="h4">
-                  {loading ? "--" : item.value}
-                </Typography>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
+        <Card sx={{ height: "100%" }} key={item.label}>
+          <CardContent>
+            <Stack spacing={1}>
+              <Typography variant="overline" color="text.secondary">
+                {item.label}
+              </Typography>
+              <Typography variant="h4">
+                {loading ? "--" : item.value}
+              </Typography>
+            </Stack>
+          </CardContent>
+        </Card>
       ))}
-    </Grid>
+    </Box>
   );
 };
 

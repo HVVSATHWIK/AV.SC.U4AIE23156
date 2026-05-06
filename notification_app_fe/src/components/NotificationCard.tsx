@@ -28,7 +28,7 @@ const NotificationCard = ({ notification, onMarkRead }: NotificationCardProps) =
     >
       <CardContent>
         <Stack spacing={1.5}>
-          <Stack direction="row" spacing={1} flexWrap="wrap" alignItems="center">
+          <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", alignItems: "center" }}>
             <Chip label={notification.type} color={typeColor[notification.type]} size="small" />
             <Chip
               label={`Priority ${score.toFixed(1)}`}

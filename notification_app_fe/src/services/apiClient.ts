@@ -13,7 +13,10 @@ export const buildUrl = (
   path?: string,
   query?: Record<string, string | number | boolean | undefined>
 ): string => {
-  const url = new URL(path ?? "", baseUrl);
+  const resolvedBase = baseUrl.startsWith("http")
+    ? baseUrl
+    : `${window.location.origin}${baseUrl.startsWith("/") ? "" : "/"}${baseUrl}`;
+  const url = new URL(path ?? "", resolvedBase);
 
   if (query) {
     Object.entries(query).forEach(([key, value]) => {

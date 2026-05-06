@@ -2,13 +2,17 @@ import { createHttpTransport, createLogger, Logger } from "logging_middleware";
 import { APP_CONFIG } from "../utils/appConfig";
 
 const buildTransport = () => {
-  if (!APP_CONFIG.loggingEndpoint) {
+  const endpoint =
+    localStorage.getItem(APP_CONFIG.loggingEndpointKey) ?? APP_CONFIG.loggingEndpoint;
+
+  if (!endpoint) {
     return async () => Promise.resolve();
   }
 
-  const token = localStorage.getItem(APP_CONFIG.loggingTokenKey);
+  const token =
+    localStorage.getItem(APP_CONFIG.loggingTokenKey) ?? APP_CONFIG.loggingToken;
   const transport = createHttpTransport({
-    endpoint: APP_CONFIG.loggingEndpoint,
+    endpoint,
     headers: token ? { Authorization: `Bearer ${token}` } : undefined,
     timeoutMs: 5000
   });
