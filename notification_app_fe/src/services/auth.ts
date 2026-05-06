@@ -64,6 +64,19 @@ const buildAuthPayload = (): Record<string, string> => {
 
 const resolveAuthUrl = (value: string): string => {
   if (value.startsWith("http")) {
+    const isLocalhost =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+
+    if (isLocalhost) {
+      try {
+        const url = new URL(value);
+        return `${window.location.origin}${url.pathname}${url.search}`;
+      } catch {
+        return value;
+      }
+    }
+
     return value;
   }
 
