@@ -43,6 +43,7 @@ const readStoredToken = (): string | undefined =>
 const buildAuthPayload = (): Record<string, string> => {
   const payload = {
     clientId: APP_CONFIG.clientId,
+    clientID: APP_CONFIG.clientId,
     clientSecret: APP_CONFIG.clientSecret,
     accessCode: APP_CONFIG.accessCode,
     email: APP_CONFIG.userEmail,
