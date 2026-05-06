@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "description": "Reusable logging middleware",
-  "devDependencies": {
+  "dependencies": {
     "typescript": "^5.5.4"
   }
 }

@@ -1,14 +1,7 @@
-import React from 'react';
+import DashboardPage from './pages';
 
 function App() {
-  return (
-    <div className="App">
-      <main className="App-content">
-        <h1>Notification Center</h1>
-        <p>UI implementation starts here.</p>
-      </main>
-    </div>
-  );
+  return <DashboardPage />;
 }
 
 export default App;
