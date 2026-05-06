@@ -1,5 +1,5 @@
 import { appLogger } from "./logger";
-import { resolveAuthToken } from "./auth";
+import { clearAuthToken, ensureAuthToken, requestAuthToken } from "./auth";
 
 export interface ApiRequestOptions {
   method?: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
@@ -36,30 +36,51 @@ export const apiRequest = async <T>(
 ): Promise<T> => {
   const url = buildUrl(baseUrl, path, options.query);
   const method = options.method ?? "GET";
-  const token = await resolveAuthToken();
   const start = performance.now();
   const logger = appLogger.withContext({ scope: "api" });
+  const body = options.body ? JSON.stringify(options.body) : undefined;
 
   await logger.info("api request", { method, url });
 
-  const headers: Record<string, string> = {
-    Accept: "application/json",
-    ...(options.headers ?? {})
+  const buildHeaders = (token?: string) => {
+    const headers: Record<string, string> = {
+      Accept: "application/json",
+      ...(options.headers ?? {})
+    };
+
+    if (options.body) {
+      headers["Content-Type"] = "application/json";
+    }
+
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
+    return headers;
   };
 
-  if (options.body) {
-    headers["Content-Type"] = "application/json";
-  }
+  const sendRequest = async (token?: string) =>
+    fetch(url, {
+      method,
+      headers: buildHeaders(token),
+      body
+    });
 
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
+  const token = await ensureAuthToken();
+  let response = await sendRequest(token);
 
-  const response = await fetch(url, {
-    method,
-    headers,
-    body: options.body ? JSON.stringify(options.body) : undefined
-  });
+  if (response.status === 401) {
+    clearAuthToken();
+    try {
+      const refreshed = await requestAuthToken();
+      if (refreshed) {
+        response = await sendRequest(refreshed);
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "auth retry failed";
+      await logger.error("auth retry failed", { message });
+    }
+  }
 
   const durationMs = Math.round(performance.now() - start);
 
