@@ -44,3 +44,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Assessment Setup
+
+1. Copy .env.example to .env and fill in the required values (token, client credentials).
+2. Run `npm install` if needed, then `npm start`.
+3. The app uses a CRA proxy to call the notifications API at `/evaluation-service/notifications`.
+
+Notes:
+- Keep `.env` untracked; it contains credentials.
+- If logging is not available, leave `REACT_APP_LOGGING_ENDPOINT` empty.
