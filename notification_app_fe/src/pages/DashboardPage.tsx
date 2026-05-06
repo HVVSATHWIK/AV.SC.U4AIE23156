@@ -16,8 +16,7 @@ import PriorityList from "../components/PriorityList";
 import { useNotifications } from "../hooks/useNotifications";
 import { usePriorityInbox } from "../hooks/usePriorityInbox";
 import { formatTimestamp } from "../utils/date";
-
-const DEFAULT_TOP_K = 10;
+import { APP_CONFIG } from "../utils/appConfig";
 
 const DashboardPage = () => {
   const {
@@ -37,8 +36,7 @@ const DashboardPage = () => {
     markAsRead
   } = useNotifications();
 
-  const topK = Number(process.env.REACT_APP_PRIORITY_TOP_K ?? DEFAULT_TOP_K);
-  const priorityItems = usePriorityInbox(notifications, topK);
+  const priorityItems = usePriorityInbox(notifications, APP_CONFIG.priorityTopK);
 
   return (
     <DashboardLayout>

@@ -7,6 +7,7 @@ import {
 import { parseTimestamp } from "../utils/date";
 import { apiRequest } from "./apiClient";
 import { appLogger } from "./logger";
+import { APP_CONFIG } from "../utils/appConfig";
 
 export interface NotificationQuery {
   type?: NotificationType;
@@ -15,10 +16,7 @@ export interface NotificationQuery {
   cursor?: string;
 }
 
-const DEFAULT_API_URL =
-  "http://20.207.122.201/evaluation-service/notifications";
-
-const API_URL = process.env.REACT_APP_NOTIFICATIONS_API_URL ?? DEFAULT_API_URL;
+const API_URL = APP_CONFIG.apiUrl;
 
 const mapNotification = (item: NotificationApiItem): Notification => {
   const createdAt = parseTimestamp(item.Timestamp);
